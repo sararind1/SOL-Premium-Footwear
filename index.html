@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>SOLÉ — Premium Footwear</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+/* ════════════════════════════════════════════
+   ROOT & RESET
+════════════════════════════════════════════ */
+:root {
+  --bg:#0c0b09;
+  --bg2:#111009;
+  --bg3:#161510;
+  --card:#18170f;
+  --gold:#c9a84c;
+  --gold2:#e2c97e;
+  --gold-dim:rgba(201,168,76,.14);
+  --text:#efe9dc;
+  --muted:#8a8479;
+  --radius:18px;
+  --nav-h:72px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:var(--nav-h)}
+body{font-family:'Jost',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;-webkit-font-smoothing:antialiased}
+img{display:block;width:100%;object-fit:cover}
+a{text-decoration:none;color:inherit}
+button{font-family:inherit;cursor:pointer;border:none;background:none}
+
+/* ─── NOISE ─── */
+body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;opacity:.025;background:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+
+/* ════════════════════════════════════════════
+   NAV
+════════════════════════════════════════════ */
+nav{position:fixed;top:0;left:0;width:100%;height:var(--nav-h);z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 3.5rem;background:rgba(12,11,9,.55);backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);border-bottom:1px solid rgba(201,168,76,.07);transition:background .4s,border-color .4s}
+nav.scrolled{background:rgba(12,11,9,.82);border-bottom-color:rgba(201,168,76,.13)}
+.logo{font-family:'Cormorant Garamond',serif;font-size:1.75rem;font-weight:700;letter-spacing:.2em;color:var(--gold)}
+.logo span{color:var(--text)}
+.nav-links{display:flex;gap:2.4rem;list-style:none}
+.nav-links a{color:var(--muted);font-size:.77rem;letter-spacing:.16em;text-transform:uppercase;font-weight:500;position:relative;transition:color .3s}
+.nav-links a::after{content:'';position:absolute;bottom:-5px;left:50%;transform:translateX(-50%);width:0;height:1.5px;background:var(--gold);border-radius:2px;transition:width .35s}
+.nav-links a:hover{color:var(--gold)}
+.nav-links a:hover::after{width:100%}
+.nav-right{display:flex;align-items:center;gap:1.6rem}
+.nav-cart{position:relative;color:var(--muted);transition:color .3s}
+.nav-cart:hover{color:var(--gold)}
+.nav-cart svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.8}
+.cart-count{position:absolute;top:-7px;right:-8px;width:16px;height:16px;background:var(--gold);color:#0c0b09;font-size:.6rem;font-weight:700;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.nav-cta{background:var(--gold);color:#0c0b09;padding:.52rem 1.45rem;border-radius:50px;font-size:.74rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;transition:transform .25s,box-shadow .3s}
+.nav-cta:hover{transform:scale(1.06);box-shadow:0 4px 24px rgba(201,168,76,.38)}
+.hamburger{display:none;flex-direction:column;gap:5px;z-index:101}
+.hamburger span{width:26px;height:2px;background:var(--text);border-radius:2px;transition:.3s}
+
+/* ════════════════════════════════════════════
+   HERO
+════════════════════════════════════════════ */
+.hero{position:relative;height:100vh;min-height:640px;overflow:hidden;display:flex;align-items:center}
+.hero-img{position:absolute;inset:0}
+.hero-img img{height:100%;width:100%;object-fit:cover;object-position:center}
+.hero-img::after{content:'';position:absolute;inset:0;background:linear-gradient(to right,rgba(12,11,9,.92) 0%,rgba(12,11,9,.6) 45%,rgba(12,11,9,.25) 100%)}
+.hero-content{position:relative;z-index:2;max-width:580px;padding-left:max(5vw,3.5rem);animation:heroIn .9s .15s both}
+.hero-badge{display:inline-flex;align-items:center;gap:.5rem;border:1px solid rgba(201,168,76,.3);color:var(--gold);font-size:.7rem;letter-spacing:.22em;text-transform:uppercase;padding:.38rem 1rem;border-radius:50px;margin-bottom:1.8rem}
+.hero-badge .dot{width:6px;height:6px;border-radius:50%;background:var(--gold);animation:pulse 2s infinite}
+.hero h1{font-family:'Cormorant Garamond',serif;font-size:clamp(3.2rem,7.5vw,6.8rem);font-weight:300;line-height:1.04;letter-spacing:-.02em}
+.hero h1 strong{font-weight:700;display:block;color:var(--gold)}
+.hero-sub{margin-top:1.5rem;color:var(--muted);font-size:.95rem;font-weight:300;line-height:1.8;max-width:420px}
+.hero-actions{margin-top:2.2rem;display:flex;gap:1rem;flex-wrap:wrap}
+.btn-gold{background:var(--gold);color:#0c0b09;padding:.7rem 2rem;border-radius:50px;font-size:.78rem;font-weight:600;letter-spacing:.13em;text-transform:uppercase;transition:transform .25s,box-shadow .3s;display:inline-flex;align-items:center;gap:.5rem}
+.btn-gold:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(201,168,76,.4)}
+.btn-ghost{border:1px solid rgba(201,168,76,.35);color:var(--gold);padding:.7rem 2rem;border-radius:50px;font-size:.78rem;font-weight:500;letter-spacing:.13em;text-transform:uppercase;transition:background .3s}
+.btn-ghost:hover{background:rgba(201,168,76,.08)}
+.hero-scroll{position:absolute;bottom:2.2rem;left:max(5vw,3.5rem);z-index:2;display:flex;align-items:center;gap:.8rem;color:var(--muted);font-size:.7rem;letter-spacing:.18em;text-transform:uppercase}
+.hero-scroll .line{width:38px;height:1px;background:var(--gold);position:relative;overflow:hidden}
+.hero-scroll .line::after{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:var(--gold2);animation:lineSlide 2s ease infinite}
+@keyframes lineSlide{to{left:100%}}
+@keyframes heroIn{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+
+/* ════════════════════════════════════════════
+   MARQUEE
+════════════════════════════════════════════ */
+.marquee-wrap{overflow:hidden;padding:1.4rem 0;border-top:1px solid rgba(201,168,76,.08);border-bottom:1px solid rgba(201,168,76,.08);background:rgba(201,168,76,.02)}
+.marquee{display:flex;gap:2.5rem;white-space:nowrap;animation:marq 30s linear infinite}
+.marquee span{font-family:'Cormorant Garamond',serif;font-size:1.6rem;font-weight:600;color:rgba(201,168,76,.22);text-transform:uppercase;letter-spacing:.18em;flex-shrink:0}
+.marquee .sep{color:var(--gold);font-size:.9rem;opacity:.5;align-self:center}
+@keyframes marq{to{transform:translateX(-50%)}}
+
+/* ════════════════════════════════════════════
+   SHARED
+════════════════════════════════════════════ */
+.sec{padding:7rem 3.5rem}
+.sec-label{font-size:.7rem;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);margin-bottom:.55rem}
+.sec-title{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,4.2vw,3rem);font-weight:600;line-height:1.15}
+.sec-title em{font-style:italic;color:var(--gold)}
+.sec-head{margin-bottom:3rem}
+.reveal{opacity:0;transform:translateY(32px);transition:opacity .75s cubic-bezier(.22,1,.36,1),transform .75s cubic-bezier(.22,1,.36,1)}
+.reveal.vis{opacity:1;transform:translateY(0)}
+
+/* ════════════════════════════════════════════
+   FEATURED SPOTLIGHT
+════════════════════════════════════════════ */
+.spotlight{display:grid;grid-template-columns:1.1fr 1fr;min-height:560px}
+.spotlight-img{position:relative;overflow:hidden}
+.spotlight-img img{height:100%;min-height:560px;transition:transform .7s cubic-bezier(.22,1,.36,1)}
+.spotlight:hover .spotlight-img img{transform:scale(1.04)}
+.spotlight-content{background:var(--bg2);display:flex;flex-direction:column;justify-content:center;padding:4.5rem 4rem}
+.spotlight-content .badge{width:fit-content;background:var(--gold);color:#0c0b09;font-size:.65rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;padding:.32rem .85rem;border-radius:50px;margin-bottom:1.4rem}
+.spotlight-content h2{font-family:'Cormorant Garamond',serif;font-size:clamp(2.2rem,4vw,3.2rem);font-weight:300;line-height:1.1}
+.spotlight-content h2 strong{font-weight:700}
+.spotlight-content p{color:var(--muted);margin-top:1.2rem;line-height:1.8;font-size:.92rem;max-width:400px}
+.spotlight-price{margin-top:1.6rem;font-size:1.5rem;font-weight:600;color:var(--gold)}
+.spotlight-price .old{color:var(--muted);text-decoration:line-through;font-size:1rem;margin-left:.5rem;font-weight:300}
+.spotlight-actions{margin-top:2rem;display:flex;gap:1rem;align-items:center}
+.spotlight-actions .sizes{display:flex;gap:.5rem}
+.spotlight-actions .sz{width:38px;height:38px;border-radius:50%;border:1px solid rgba(201,168,76,.2);color:var(--muted);font-size:.78rem;display:flex;align-items:center;justify-content:center;transition:all .25s}
+.spotlight-actions .sz:hover,.spotlight-actions .sz.active{border-color:var(--gold);color:var(--gold);background:rgba(201,168,76,.08)}
+
+/* ════════════════════════════════════════════
+   PRODUCT GRID
+════════════════════════════════════════════ */
+.filter-bar{display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:1.2rem;margin-bottom:2.8rem}
+.pills{display:flex;gap:.55rem;flex-wrap:wrap}
+.pill{background:var(--card);border:1px solid rgba(201,168,76,.1);color:var(--muted);padding:.38rem 1.1rem;border-radius:50px;font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;font-weight:500;transition:all .25s}
+.pill:hover,.pill.active{background:var(--gold);color:#0c0b09;border-color:var(--gold)}
+.sort-select{background:var(--card);border:1px solid rgba(201,168,76,.12);color:var(--muted);padding:.4rem 1rem;border-radius:50px;font-size:.74rem;letter-spacing:.08em;outline:none;appearance:none;-webkit-appearance:none;padding-right:1.8rem;background-image:url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%238a8479' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right .9rem center;cursor:pointer}
+.sort-select option{background:var(--card);color:var(--text)}
+
+.pgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(275px,1fr));gap:1.8rem}
+.pcard{background:var(--card);border-radius:var(--radius);overflow:hidden;border:1px solid rgba(201,168,76,.06);transition:transform .4s cubic-bezier(.22,1,.36,1),box-shadow .4s}
+.pcard:hover{transform:translateY(-8px);box-shadow:0 28px 60px rgba(0,0,0,.45)}
+.pcard-img{position:relative;overflow:hidden;aspect-ratio:4/3.2}
+.pcard-img img{transition:transform .6s cubic-bezier(.22,1,.36,1)}
+.pcard:hover .pcard-img img{transform:scale(1.07)}
+.pcard-badge{position:absolute;top:.9rem;left:.9rem;background:rgba(12,11,9,.72);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);color:var(--gold);font-size:.62rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;padding:.28rem .7rem;border-radius:50px;border:1px solid rgba(201,168,76,.18)}
+.pcard-wish{position:absolute;top:.9rem;right:.9rem;width:36px;height:36px;background:rgba(12,11,9,.6);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-radius:50%;display:flex;align-items:center;justify-content:center;transition:background .25s,transform .2s}
+.pcard-wish:hover{background:rgba(201,168,76,.15);transform:scale(1.1)}
+.pcard-wish svg{width:16px;height:16px;stroke:var(--muted);fill:none;stroke-width:2;transition:all .25s}
+.pcard-wish.active svg{fill:#e04848;stroke:#e04848}
+.pcard-body{padding:1.3rem 1.3rem 1.5rem}
+.pcard-cat{font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:.3rem}
+.pcard-name{font-family:'Cormorant Garamond',serif;font-size:1.18rem;font-weight:600}
+.pcard-colors{display:flex;gap:.45rem;margin-top:.7rem}
+.pcard-color{width:14px;height:14px;border-radius:50%;border:2px solid rgba(255,255,255,.08);transition:transform .2s}
+.pcard-color:hover{transform:scale(1.25)}
+.pcard-foot{display:flex;align-items:center;justify-content:space-between;margin-top:1rem}
+.pcard-price{font-size:1.1rem;font-weight:600;color:var(--gold)}
+.pcard-price .old{color:var(--muted);text-decoration:line-through;font-size:.8rem;margin-left:.35rem;font-weight:300}
+.pcard-add{width:40px;height:40px;border-radius:50%;border:1.5px solid rgba(201,168,76,.3);color:var(--gold);font-size:1.35rem;display:flex;align-items:center;justify-content:center;transition:background .25s,transform .2s,border-color .25s}
+.pcard-add:hover{background:var(--gold);color:#0c0b09;border-color:var(--gold);transform:scale(1.1)}
+
+/* ════════════════════════════════════════════
+   CATEGORIES
+════════════════════════════════════════════ */
+.cat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.4rem}
+.cat-card{position:relative;border-radius:var(--radius);overflow:hidden;aspect-ratio:3/3.5;cursor:pointer}
+.cat-card img{height:100%;transition:transform .6s cubic-bezier(.22,1,.36,1)}
+.cat-card:hover img{transform:scale(1.08)}
+.cat-card::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(12,11,9,.85) 0%,rgba(12,11,9,.2) 50%,transparent 100%)}
+.cat-content{position:absolute;bottom:0;left:0;right:0;z-index:2;padding:2.2rem 1.8rem}
+.cat-content h3{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:600;margin-bottom:.35rem}
+.cat-content p{color:var(--muted);font-size:.78rem;letter-spacing:.06em}
+.cat-content .cat-link{display:inline-flex;align-items:center;gap:.5rem;margin-top:1rem;color:var(--gold);font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;font-weight:500;transition:gap .3s}
+.cat-card:hover .cat-link{gap:.85rem}
+.cat-link svg{width:14px;height:14px;stroke:var(--gold);fill:none;stroke-width:2.5}
+
+/* ════════════════════════════════════════════
+   STATS STRIP
+════════════════════════════════════════════ */
+.stats-strip{background:var(--bg2);border-top:1px solid rgba(201,168,76,.08);border-bottom:1px solid rgba(201,168,76,.08);padding:3.5rem 3.5rem}
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2rem;max-width:1100px;margin:0 auto}
+.stat{text-align:center}
+.stat-num{font-family:'Cormorant Garamond',serif;font-size:2.8rem;font-weight:700;color:var(--gold);line-height:1}
+.stat-label{font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-top:.5rem}
+
+/* ════════════════════════════════════════════
+   CRAFT / EDITORIAL
+════════════════════════════════════════════ */
+.editorial{display:grid;grid-template-columns:1fr 1fr;min-height:520px}
+.editorial-img{position:relative;overflow:hidden}
+.editorial-img img{height:100%;min-height:520px;transition:transform .7s cubic-bezier(.22,1,.36,1)}
+.editorial:hover .editorial-img img{transform:scale(1.03)}
+.editorial-content{background:var(--bg3);display:flex;flex-direction:column;justify-content:center;padding:4.5rem 4rem}
+.editorial-content .num{font-family:'Cormorant Garamond',serif;font-size:6rem;font-weight:700;color:rgba(201,168,76,.08);line-height:1;position:absolute;top:2rem;right:2rem}
+.editorial-content{position:relative}
+.editorial-content p{color:var(--muted);line-height:1.9;font-size:.92rem;margin-top:1rem;max-width:420px}
+.editorial-steps{margin-top:2rem;display:flex;flex-direction:column;gap:1rem}
+.step{display:flex;align-items:flex-start;gap:1rem}
+.step-num{width:32px;height:32px;border-radius:50%;border:1.5px solid var(--gold);color:var(--gold);font-size:.8rem;font-weight:600;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.step-text h5{font-size:.82rem;font-weight:600;color:var(--text);margin-bottom:.15rem}
+.step-text p{color:var(--muted);font-size:.78rem;line-height:1.5}
+
+/* ════════════════════════════════════════════
+   TESTIMONIALS
+════════════════════════════════════════════ */
+.testi-wrap{overflow:hidden}
+.testi-track{display:flex;gap:1.6rem;transition:transform .55s cubic-bezier(.22,1,.36,1)}
+.testi-card{min-width:calc(33.33% - 1.1rem);background:var(--card);border:1px solid rgba(201,168,76,.07);border-radius:var(--radius);padding:2.2rem;flex-shrink:0}
+.testi-stars{color:var(--gold);font-size:.85rem;letter-spacing:.15rem;margin-bottom:1rem}
+.testi-card blockquote{font-family:'Cormorant Garamond',serif;font-size:1.15rem;font-style:italic;font-weight:300;line-height:1.7;color:var(--text)}
+.testi-author{margin-top:1.4rem;display:flex;align-items:center;gap:.9rem}
+.testi-avatar{width:40px;height:40px;border-radius:50%;background:var(--bg3);border:2px solid rgba(201,168,76,.15);overflow:hidden}
+.testi-avatar img{width:100%;height:100%;object-fit:cover}
+.testi-info h5{font-size:.82rem;font-weight:600;color:var(--text)}
+.testi-info span{font-size:.72rem;color:var(--muted)}
+.testi-nav{display:flex;gap:.7rem;justify-content:center;margin-top:2.2rem}
+.testi-dot{width:10px;height:10px;border-radius:50%;background:rgba(201,168,76,.2);transition:background .3s,width .3s}
+.testi-dot.active{background:var(--gold);width:28px;border-radius:5px}
+
+/* ════════════════════════════════════════════
+   PARALLAX QUOTE
+════════════════════════════════════════════ */
+.parallax-quote{position:relative;height:420px;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.parallax-quote .bg-img{position:absolute;inset:-30px;background-size:cover;background-position:center;transition:transform .1s linear}
+.parallax-quote::after{content:'';position:absolute;inset:0;background:rgba(12,11,9,.72)}
+.parallax-quote .quote-inner{position:relative;z-index:2;text-align:center;padding:0 2rem;max-width:780px}
+.parallax-quote blockquote{font-family:'Cormorant Garamond',serif;font-size:clamp(1.6rem,3.5vw,2.5rem);font-weight:300;font-style:italic;line-height:1.5;color:var(--text)}
+.parallax-quote blockquote .qmark{font-size:3rem;color:var(--gold);line-height:.6;display:block;margin-bottom:.3rem}
+.parallax-quote cite{display:block;margin-top:1.2rem;color:var(--gold);font-size:.76rem;letter-spacing:.18em;text-transform:uppercase;font-style:normal}
+
+/* ════════════════════════════════════════════
+   INSTAGRAM / SOCIAL
+════════════════════════════════════════════ */
+.insta-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:10px}
+.insta-item{position:relative;overflow:hidden;aspect-ratio:1;border-radius:12px;cursor:pointer}
+.insta-item img{transition:transform .5s cubic-bezier(.22,1,.36,1)}
+.insta-item:hover img{transform:scale(1.1)}
+.insta-item::after{content:'';position:absolute;inset:0;background:rgba(12,11,9,0);transition:background .35s}
+.insta-item:hover::after{background:rgba(12,11,9,.55)}
+.insta-overlay{position:absolute;inset:0;z-index:2;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .35s}
+.insta-item:hover .insta-overlay{opacity:1}
+.insta-overlay svg{width:28px;height:28px;stroke:#fff;fill:none;stroke-width:1.5}
+
+/* ════════════════════════════════════════════
+   NEWSLETTER
+════════════════════════════════════════════ */
+.newsletter-sec{position:relative;overflow:hidden}
+.newsletter-sec .bg{position:absolute;inset:0;background:linear-gradient(135deg,#1a1710 0%,#0f0e0b 60%,#14130f 100%)}
+.newsletter-sec .orb1{position:absolute;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(201,168,76,.12) 0%,transparent 70%);top:-200px;right:-150px}
+.newsletter-sec .orb2{position:absolute;width:350px;height:350px;border-radius:50%;background:radial-gradient(circle,rgba(201,168,76,.08) 0%,transparent 70%);bottom:-100px;left:-120px}
+.newsletter-inner{position:relative;z-index:2;text-align:center;max-width:620px;margin:0 auto;padding:7rem 2rem}
+.newsletter-inner h2{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,4.5vw,3.2rem);font-weight:300;line-height:1.15}
+.newsletter-inner h2 strong{font-weight:700;color:var(--gold)}
+.newsletter-inner p{color:var(--muted);margin-top:1rem;line-height:1.7;font-size:.9rem}
+.nl-form{margin-top:1.8rem;display:flex;gap:.7rem;max-width:500px;margin-left:auto;margin-right:auto}
+.nl-form input{flex:1;background:rgba(18,17,15,.7);border:1px solid rgba(201,168,76,.18);border-radius:50px;padding:.7rem 1.6rem;color:var(--text);font-size:.84rem;outline:none;transition:border-color .3s;font-family:inherit}
+.nl-form input::placeholder{color:var(--muted)}
+.nl-form input:focus{border-color:var(--gold)}
+
+/* ════════════════════════════════════════════
+   FOOTER
+════════════════════════════════════════════ */
+footer{border-top:1px solid rgba(201,168,76,.07);padding:5rem 3.5rem 2.2rem;background:var(--bg2)}
+.footer-top{display:grid;grid-template-columns:2.2fr 1fr 1fr 1fr 1.3fr;gap:3rem}
+.ft-brand .logo{display:inline-block;margin-bottom:1rem;font-size:1.5rem}
+.ft-brand p{color:var(--muted);font-size:.82rem;line-height:1.8;max-width:260px}
+.ft-social{margin-top:1.4rem;display:flex;gap:.8rem}
+.ft-social a{width:34px;height:34px;border-radius:50%;border:1px solid rgba(201,168,76,.15);display:flex;align-items:center;justify-content:center;color:var(--muted);transition:all .25s}
+.ft-social a:hover{border-color:var(--gold);color:var(--gold)}
+.ft-social svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2}
+footer h5{font-size:.68rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:1.1rem}
+footer ul{list-style:none}
+footer ul li{margin-bottom:.6rem}
+footer ul a{color:var(--muted);font-size:.82rem;transition:color .25s}
+footer ul a:hover{color:var(--gold)}
+.ft-contact p{color:var(--muted);font-size:.82rem;line-height:1.9}
+.ft-contact p strong{color:var(--text);font-weight:500}
+.footer-bottom{margin-top:3.5rem;padding-top:1.5rem;border-top:1px solid rgba(201,168,76,.07);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.7rem}
+.footer-bottom span{color:var(--muted);font-size:.74rem}
+.footer-bottom .legal a{color:var(--muted);margin-left:1.2rem;transition:color .25s;font-size:.74rem}
+.footer-bottom .legal a:hover{color:var(--gold)}
+
+/* ════════════════════════════════════════════
+   MOBILE OVERLAY NAV
+════════════════════════════════════════════ */
+.mobile-menu{display:none;position:fixed;inset:0;z-index:99;background:rgba(12,11,9,.96);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);flex-direction:column;align-items:center;justify-content:center;gap:1.6rem}
+.mobile-menu.open{display:flex}
+.mobile-menu a{font-family:'Cormorant Garamond',serif;font-size:2rem;color:var(--text);transition:color .3s;letter-spacing:.06em}
+.mobile-menu a:hover{color:var(--gold)}
+.mob-close{position:absolute;top:1.6rem;right:2rem;color:var(--text);font-size:1.6rem}
+
+/* ════════════════════════════════════════════
+   TOAST
+════════════════════════════════════════════ */
+.toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%) translateY(100px);background:var(--card);border:1px solid rgba(201,168,76,.28);color:var(--text);padding:.7rem 1.7rem;border-radius:50px;font-size:.8rem;z-index:500;transition:transform .42s cubic-bezier(.34,1.56,.64,1);display:flex;align-items:center;gap:.6rem;white-space:nowrap}
+.toast.show{transform:translateX(-50%) translateY(0)}
+.toast svg{width:16px;height:16px;stroke:var(--gold);fill:none;stroke-width:2.5}
+
+/* ════════════════════════════════════════════
+   RESPONSIVE
+════════════════════════════════════════════ */
+@media(max-width:1024px){
+  .spotlight{grid-template-columns:1fr}
+  .spotlight-img img{min-height:380px}
+  .editorial{grid-template-columns:1fr}
+  .editorial-img img{min-height:380px}
+  .cat-grid{grid-template-columns:repeat(2,1fr)}
+  .testi-card{min-width:calc(50% - .8rem)}
+  .insta-grid{grid-template-columns:repeat(4,1fr)}
+  .footer-top{grid-template-columns:1fr 1fr;gap:2.2rem}
+}
+@media(max-width:768px){
+  nav{padding:0 1.6rem}
+  .nav-links,.nav-right{display:none}
+  .hamburger{display:flex}
+  .sec{padding:5rem 1.6rem}
+  .hero-content{padding-left:1.8rem;max-width:100%}
+  .hero-scroll{left:1.8rem}
+  .cat-grid{grid-template-columns:1fr}
+  .stats-grid{grid-template-columns:repeat(2,1fr)}
+  .testi-card{min-width:calc(100% - 0px)}
+  .insta-grid{grid-template-columns:repeat(3,1fr)}
+  .nl-form{flex-direction:column}
+  .footer-top{grid-template-columns:1fr}
+  .footer-bottom{flex-direction:column;text-align:center}
+  .pgrid{grid-template-columns:repeat(auto-fill,minmax(240px,1fr))}
+}
+@media(max-width:480px){
+  .hero h1{font-size:2.6rem}
+  .pgrid{grid-template-columns:1fr 1fr}
+  .insta-grid{grid-template-columns:repeat(2,1fr)}
+  .stats-grid{grid-template-columns:1fr 1fr}
+  .parallax-quote{height:320px}
+}
+</style>
+</head>
+<body>
+
+<!-- ══ NAV ══ -->
+<nav id="navbar">
+  <a href="#" class="logo">SOL<span>É</span></a>
+  <ul class="nav-links">
+    <li><a href="#collection">Collection</a></li>
+    <li><a href="#categories">Categories</a></li>
+    <li><a href="#craft">Our Craft</a></li>
+    <li><a href="#reviews">Reviews</a></li>
+    <li><a href="#social">Journal</a></li>
+  </ul>
+  <div class="nav-right">
+    <button class="nav-cart" onclick="showToast('Cart coming soon')">
+      <svg viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+      <span class="cart-count">3</span>
+    </button>
+    <button class="nav-cta">Shop Now</button>
+  </div>
+  <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
+</nav>
+
+<!-- ══ MOBILE NAV ══ -->
+<div class="mobile-menu" id="mobileMenu">
+  <button class="mob-close" id="mobClose">✕</button>
+  <a href="#collection" onclick="closeMob()">Collection</a>
+  <a href="#categories" onclick="closeMob()">Categories</a>
+  <a href="#craft" onclick="closeMob()">Our Craft</a>
+  <a href="#reviews" onclick="closeMob()">Reviews</a>
+  <a href="#social" onclick="closeMob()">Journal</a>
+</div>
+
+<!-- ══ HERO ══ -->
+<section class="hero">
+  <div class="hero-img">
+    <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=1600&q=80" alt="Hero Shoe" loading="eager"/>
+  </div>
+  <div class="hero-content">
+    <div class="hero-badge"><span class="dot"></span> New Collection — SS 2025</div>
+    <h1>Step Into<br><strong>Timeless</strong><br>Elegance</h1>
+    <p class="hero-sub">Handcrafted Italian leather footwear, designed for those who refuse to compromise on style or comfort.</p>
+    <div class="hero-actions">
+      <a href="#collection" class="btn-gold">Explore Collection <span style="font-size:1.1rem">→</span></a>
+      <a href="#craft" class="btn-ghost">Our Story</a>
+    </div>
+  </div>
+  <div class="hero-scroll"><div class="line"></div><span>Scroll</span></div>
+</section>
+
+<!-- ══ MARQUEE ══ -->
+<div class="marquee-wrap">
+  <div class="marquee" id="marquee"></div>
+</div>
+
+<!-- ══ SPOTLIGHT ══ -->
+<section id="spotlight">
+  <div class="spotlight reveal">
+    <div class="spotlight-img">
+      <img src="https://images.unsplash.com/photo-1491553895911-0055eca6402d?w=900&q=80" alt="Spotlight Shoe"/>
+    </div>
+    <div class="spotlight-content">
+      <div class="badge">★ Editor's Pick</div>
+      <h2>The <strong>Noir Silhouette</strong><br>Derby</h2>
+      <p>Our flagship creation — a masterclass in Italian shoemaking. Full-grain calfskin leather, hand-stitched Blake construction, and a hand-lasted silhouette that molds to your foot over time.</p>
+      <div class="spotlight-price">$485 <span class="old">$620</span></div>
+      <div class="spotlight-actions">
+        <div class="sizes">
+          <button class="sz active">40</button>
+          <button class="sz">41</button>
+          <button class="sz">42</button>
+          <button class="sz">43</button>
+        </div>
+        <button class="btn-gold" onclick="showToast('Noir Silhouette added to cart ✓')">Add to Cart</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ COLLECTION ══ -->
+<section class="sec" id="collection">
+  <div class="filter-bar reveal">
+    <div class="sec-head" style="margin-bottom:0">
+      <p class="sec-label">The Collection</p>
+      <h2 class="sec-title">New <em>Arrivals</em></h2>
+    </div>
+    <div style="display:flex;align-items:center;gap:1rem;flex-wrap:wrap">
+      <div class="pills" id="pills"></div>
+      <select class="sort-select" id="sortSelect">
+        <option value="default">Sort By</option>
+        <option value="price-low">Price: Low → High</option>
+        <option value="price-high">Price: High → Low</option>
+        <option value="newest">Newest</option>
+      </select>
+    </div>
+  </div>
+  <div class="pgrid" id="productGrid"></div>
+</section>
+
+<!-- ══ CATEGORIES ══ -->
+<section class="sec" id="categories" style="padding-top:2rem">
+  <div class="sec-head reveal" style="text-align:center">
+    <p class="sec-label">Shop By</p>
+    <h2 class="sec-title">Browse <em>Categories</em></h2>
+  </div>
+  <div class="cat-grid" id="catGrid"></div>
+</section>
+
+<!-- ══ STATS ══ -->
+<div class="stats-strip">
+  <div class="stats-grid">
+    <div class="stat reveal"><div class="stat-num">12K+</div><div class="stat-label">Happy Customers</div></div>
+    <div class="stat reveal"><div class="stat-num">40+</div><div class="stat-label">Hours Per Pair</div></div>
+    <div class="stat reveal"><div class="stat-num">87</div><div class="stat-label">Years of Heritage</div></div>
+    <div class="stat reveal"><div class="stat-num">4.9★</div><div class="stat-label">Average Rating</div></div>
+  </div>
+</div>
+
+<!-- ══ PARALLAX QUOTE ══ -->
+<div class="parallax-quote" id="parallaxQuote">
+  <div class="bg-img" style="background-image:url('https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=1400&q=60')"></div>
+  <div class="quote-inner">
+    <blockquote><span class="qmark">"</span>Shoes are the finishing touch to any outfit — but the right pair becomes an identity.</blockquote>
+    <cite>— Alessandro Marchesa, Master Cobbler</cite>
+  </div>
+</div>
+
+<!-- ══ EDITORIAL / CRAFT ══ -->
+<section class="sec" id="craft" style="padding-top:2rem">
+  <div class="editorial reveal">
+    <div class="editorial-img">
+      <img src="https://images.unsplash.com/photo-1491553895911-0055eca6402d?w=900&q=80" alt="Craftsmanship"/>
+    </div>
+    <div class="editorial-content">
+      <span class="num">01</span>
+      <p class="sec-label">Behind the Craft</p>
+      <h2 class="sec-title">Made by <em>Hand</em></h2>
+      <p>Every SOLÉ shoe begins its life in our Florence atelier, where master artisans with decades of experience shape each pair by hand. No shortcuts. No compromises.</p>
+      <div class="editorial-steps">
+        <div class="step"><div class="step-num">1</div><div class="step-text"><h5>Leather Selection</h5><p>We source only full-grain calfskin from ethical Italian tanneries in Tuscany.</p></div></div>
+        <div class="step"><div class="step-num">2</div><div class="step-text"><h5>Hand Cutting</h5><p>Each panel is cut by hand using traditional patterns passed down through generations.</p></div></div>
+        <div class="step"><div class="step-num">3</div><div class="step-text"><h5>Assembly & Lasting</h5><p>Hand-stitched using Blake or Goodyear welt — built to be resoled and last a lifetime.</p></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ SECOND EDITORIAL (reversed) ══ -->
+<section class="sec" style="padding-top:1rem">
+  <div class="editorial reveal" style="direction:rtl">
+    <div class="editorial-img">
+      <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=900&q=80" alt="Comfort"/>
+    </div>
+    <div class="editorial-content" style="direction:ltr">
+      <span class="num">02</span>
+      <p class="sec-label">The Experience</p>
+      <h2 class="sec-title">Comfort <em>Redefined</em></h2>
+      <p>Our proprietary cushioning system combines a memory-foam insole with an anatomical arch support, ensuring all-day luxury — from morning commute to evening dinner.</p>
+      <div class="editorial-steps">
+        <div class="step"><div class="step-num">✓</div><div class="step-text"><h5>Memory Foam Insole</h5><p>Custom-molded to cradle every contour of your foot.</p></div></div>
+        <div class="step"><div class="step-num">✓</div><div class="step-text"><h5>Arch Support Technology</h5><p>Engineered for prolonged standing and walking.</p></div></div>
+        <div class="step"><div class="step-num">✓</div><div class="step-text"><h5>Breathable Lining</h5><p>Premium leather lining keeps feet cool and dry all day.</p></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ TESTIMONIALS ══ -->
+<section class="sec" id="reviews">
+  <div class="sec-head reveal" style="text-align:center">
+    <p class="sec-label">Reviews</p>
+    <h2 class="sec-title">What Our <em>Customers</em> Say</h2>
+  </div>
+  <div class="testi-wrap reveal">
+    <div class="testi-track" id="testiTrack"></div>
+  </div>
+  <div class="testi-nav" id="testiNav"></div>
+</section>
+
+<!-- ══ INSTAGRAM / SOCIAL ══ -->
+<section class="sec" id="social" style="padding-top:2rem">
+  <div class="sec-head reveal" style="text-align:center">
+    <p class="sec-label">Follow Us</p>
+    <h2 class="sec-title">The <em>SOLÉ</em> Journal</h2>
+    <p style="color:var(--muted);margin-top:.6rem;font-size:.85rem">@sole.footwear</p>
+  </div>
+  <div class="insta-grid" id="instaGrid"></div>
+</section>
+
+<!-- ══ NEWSLETTER ══ -->
+<section class="newsletter-sec">
+  <div class="bg"></div>
+  <div class="orb1"></div>
+  <div class="orb2"></div>
+  <div class="newsletter-inner reveal">
+    <p class="sec-label">Stay in the Loop</p>
+    <h2>Join the <strong>Inner Circle</strong></h2>
+    <p>Get first access to new drops, exclusive behind-the-scenes stories, and members-only offers — straight to your inbox.</p>
+    <div class="nl-form">
+      <input type="email" id="nlInput" placeholder="Enter your email address"/>
+      <button class="btn-gold" onclick="nlSubmit()">Subscribe</button>
+    </div>
+    <p style="color:var(--muted);font-size:.7rem;margin-top:1rem;letter-spacing:.04em">No spam, ever. Unsubscribe anytime.</p>
+  </div>
+</section>
+
+<!-- ══ FOOTER ══ -->
+<footer>
+  <div class="footer-top">
+    <div class="ft-brand">
+      <a href="#" class="logo">SOL<span>É</span></a>
+      <p>Luxury footwear rooted in 87 years of Italian heritage. Designed in Milan. Crafted in Florence. Worn worldwide.</p>
+      <div class="ft-social">
+        <a href="#"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" stroke="none"/></svg></a>
+        <a href="#"><svg viewBox="0 0 24 24"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"/></svg></a>
+        <a href="#"><svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
+        <a href="#"><svg viewBox="0 0 24 24"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19.1c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"/><polygon points="9.75,15.02 15.5,11.75 9.75,8.48"/></svg></a>
+      </div>
+    </div>
+    <div>
+      <h5>Shop</h5>
+      <ul>
+        <li><a href="#">New Arrivals</a></li>
+        <li><a href="#">Men's Collection</a></li>
+        <li><a href="#">Women's Collection</a></li>
+        <li><a href="#">Kids</a></li>
+        <li><a href="#">Sale</a></li>
+        <li><a href="#">Gift Cards</a></li>
+      </ul>
+    </div>
+    <div>
+      <h5>Company</h5>
+      <ul>
+        <li><a href="#">Our Story</a></li>
+        <li><a href="#">Craftsmanship</a></li>
+        <li><a href="#">Sustainability</a></li>
+        <li><a href="#">Careers</a></li>
+        <li><a href="#">Press</a></li>
+        <li><a href="#">Blog</a></li>
+      </ul>
+    </div>
+    <div>
+      <h5>Support</h5>
+      <ul>
+        <li><a href="#">Shipping & Returns</a></li>
+        <li><a href="#">Size Guide</a></li>
+        <li><a href="#">FAQ</a></li>
+        <li><a href="#">Warranty</a></li>
+        <li><a href="#">Contact Us</a></li>
+        <li><a href="#">Order Tracking</a></li>
+      </ul>
+    </div>
+    <div class="ft-contact">
+      <h5>Visit Us</h5>
+      <p><strong>Milan Flagship</strong><br>Via Montenapoleone 18<br>20121 Milano, Italy</p>
+      <p style="margin-top:1rem"><strong>Florence Atelier</strong><br>Via dei Servi 23<br>50122 Firenze, Italy</p>
+      <p style="margin-top:1rem"><strong>Email</strong><br>hello@sole.com</p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 SOLÉ Premium Footwear. All rights reserved.</span>
+    <div class="legal"><a href="#">Privacy</a><a href="#">Terms</a><a href="#">Cookies</a></div>
+  </div>
+</footer>
+
+<!-- ══ TOAST ══ -->
+<div class="toast" id="toast">
+  <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+  <span id="toastMsg">Added to cart!</span>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     JAVASCRIPT
+   ══════════════════════════════════════════════ -->
+<script>
+// ─── DATA ───
+const products = [
+  {id:1,name:"The Oxford Classic",cat:"mens",price:285,old:340,badge:"Bestseller",img:"https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=600&q=80",colors:["#2c2c2c","#8b6914","#1a1a2e"]},
+  {id:2,name:"Malibu Strider",cat:"womens",price:195,old:null,badge:"New",img:"https://images.unsplash.com/photo-1491553895911-0055eca6402d?w=600&q=80",colors:["#d4a5a5","#f5efe0","#c4a882"]},
+  {id:3,name:"Urban Drift",cat:"unisex",price:220,old:275,badge:"Sale",img:"https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=600&q=80",colors:["#1c1c1c","#e8e0d5","#c8a96e"]},
+  {id:4,name:"Velvet Night",cat:"womens",price:310,old:null,badge:"Limited",img:"https://images.unsplash.com/photo-1491553895911-0055eca6402d?w=600&q=80",colors:["#2d1b3d","#1a1a1a","#8b6b8b"]},
+  {id:5,name:"Sahara Walker",cat:"mens",price:260,old:300,badge:null,img:"https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=600&q=80",colors:["#c4a46b","#8b7355","#d4c4a6"]},
+  {id:6,name:"Cloud Step",cat:"unisex",price:175,old:null,badge:"New",img:"https://images.unsplash.com/photo-1491553895911-0055eca6402d?w=600&q=80",colors:["#e8e4df","#d4ccc4","#c8a96e"]},
+  {id:7,name:"Midnight Lux",cat:"mens",price:340,old:420,badge:"Sale",img:"https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=600&q=80",colors:["#0d0d0d","#1a1a2e","#2c2c3e"]},
+  {id:8,name:"Flora Glide",cat:"womens",price:225,old:null,badge:null,img:"https://images.unsplash.com/photo-1491553895911-0055eca6402d?w=600&q=80",colors:["#c4956a","#e8d5c0","#a67b5b"]},
+  {id:9,name:"Alpine Trek",cat:"mens",price:295,old:null,badge:"New",img:"https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=600&q=80",colors:["#3b3b3b","#6b4c2a","#c4a46b"]},
+  {id:10,name:"Petal Bloom",cat:"womens",price:180,old:220,badge:"Sale",img:"https://images.unsplash.com/photo-1491553895911-0055eca6402d?w=600&q=80",colors:["#e8c4c0","#f0e0d8","#d4a5a5"]},
+  {id:11,name:"Stealth Runner",cat:"unisex",price:240,old:null,badge:"Hot",img:"https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=600&q=80",colors:["#111","#333","#c8a96e"]},
+  {id:12,name:"Royal Loafer",cat:"mens",price:380,old:480,badge:"Sale",img:"https://images.unsplash.com/photo-1491553895911-0055eca6402d?w=600&q=80",colors:["#1a1a2e","#c8a96e","#2c2c2c"]}
+];
+
+const categories = [
+  {name:"Men's",count:52,img:"https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=700&q=80"},
+  {name:"Women's",count:68,img:"https://images.unsplash.com/photo-1491553895911-0055eca6402d?w=700&q=80"},
+  {name:"Kids",count:34,img:"https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=700&q=80&flip=h"}
+];
+
+const testimonials = [
+  {text:"Absolutely stunning craftsmanship. I've owned luxury shoes before, but nothing compares to the way these feel and look after months of wear. Truly exceptional.",author:"James Whitfield",role:"Creative Director",stars:5},
+  {text:"The leather quality is extraordinary. My pair has developed the most beautiful patina over six months. These are the kind of shoes you pass down to your children.",author:"Sophie Laurent",role:"Architect",stars:5},
+  {text:"I was skeptical about spending this much on shoes, but SOLÉ proved every penny was worth it. The comfort alone is worth the investment — I wear them all day.",author:"Michael Chen",role:"Tech Entrepreneur",stars:5},
+  {text:"From the unboxing to the first wear, everything felt luxurious. The attention to detail is remarkable — the stitching, the sole, the lining. Just perfection.",author:"Elena Rossi",role:"Stylist",stars:5},
+  {text:"I've tried high-end shoes from many brands. SOLÉ has a warmth and character that machine-made luxury simply cannot replicate. These are truly hand-made treasures.",author:"David Armstrong",role:"Investment Banker",stars:5},
+  {text:"The customer service is as exceptional as the product. They helped me find the perfect fit and the shipping was beautifully packaged. Will definitely order again.",author:"Aria Patel",role:"Writer",stars:5}
+];
+
+const instaImgs = [
+  "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400&q=70",
+  "https://images.unsplash.com/photo-1491553895911-0055eca6402d?w=400&q=70",
+  "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400&q=70&flip=h",
+  "https://images.unsplash.com/photo-1491553895911-0055eca6402d?w=400&q=70&flip=h",
+  "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400&q=70&flip=v",
+  "https://images.unsplash.com/photo-1491553895911-0055eca6402d?w=400&q=70&flip=v",
+  "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400&q=70&w=500",
+  "https://images.unsplash.com/photo-1491553895911-0055eca6402d?w=400&q=70&w=500",
+  "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400&q=70&blur=1",
+  "https://images.unsplash.com/photo-1491553895911-0055eca6402d?w=400&q=70&blur=1",
+  "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400&q=70&sat=-30",
+  "https://images.unsplash.com/photo-1491553895911-0055eca6402d?w=400&q=70&sat=-30"
+];
+
+// ─── WISHLIST STATE ───
+const wishlist = new Set();
+
+// ─── RENDER PRODUCTS ───
+function renderProducts(filter='all') {
+  const grid = document.getElementById('productGrid');
+  let list = filter === 'all' ? products : products.filter(p => p.cat === filter);
+  // Sort
+  const sort = document.getElementById('sortSelect').value;
+  if(sort==='price-low') list.sort((a,b)=>a.price-b.price);
+  else if(sort==='price-high') list.sort((a,b)=>b.price-a.price);
+
+  grid.innerHTML = list.map((p,i) => `
+    <div class="pcard reveal" style="transition-delay:${i*0.06}s">
+      <div class="pcard-img">
+        <img src="${p.img}" alt="${p.name}" loading="lazy"/>
+        ${p.badge ? `<span class="pcard-badge">${p.badge}</span>` : ''}
+        <button class="pcard-wish ${wishlist.has(p.id)?'active':''}" onclick="toggleWish(${p.id},this)">
+          <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        </button>
+      </div>
+      <div class="pcard-body">
+        <p class="pcard-cat">${p.cat}</p>
+        <h3 class="pcard-name">${p.name}</h3>
+        <div class="pcard-colors">${p.colors.map(c=>`<span class="pcard-color" style="background:${c}" title="${c}"></span>`).join('')}</div>
+        <div class="pcard-foot">
+          <div class="pcard-price">$${p.price}${p.old?`<span class="old">$${p.old}</span>`:''}</div>
+          <button class="pcard-add" onclick="showToast('${p.name} added to cart ✓')">+</button>
+        </div>
+      </div>
+    </div>
+  `).join('');
+  requestAnimationFrame(()=>{
+    grid.querySelectorAll('.reveal').forEach(el=>el.classList.add('vis'));
+  });
+}
+
+// ─── FILTERS + PILLS ───
+function initFilters() {
+  const pills = document.getElementById('pills');
+  ['all','mens','womens','unisex'].forEach((c,i)=>{
+    const btn = document.createElement('button');
+    btn.className = 'pill' + (i===0?' active':'');
+    btn.textContent = c==='all'?'All':c.charAt(0).toUpperCase()+c.slice(1);
+    btn.onclick = ()=>{
+      document.querySelectorAll('.pill').forEach(p=>p.classList.remove('active'));
+      btn.classList.add('active');
+      renderProducts(c);
+    };
+    pills.appendChild(btn);
+  });
+  document.getElementById('sortSelect').addEventListener('change',()=>renderProducts(document.querySelector('.pill.active').textContent.toLowerCase()));
+}
+
+// ─── WISHLIST ───
+function toggleWish(id,btn) {
+  if(wishlist.has(id)){wishlist.delete(id);btn.classList.remove('active')}
+  else{wishlist.add(id);btn.classList.add('active');showToast('Added to wishlist ♥')}
+}
+
+// ─── CATEGORIES ───
+function renderCategories() {
+  document.getElementById('catGrid').innerHTML = categories.map((c,i)=>`
+    <div class="cat-card reveal" style="transition-delay:${i*0.12}s">
+      <img src="${c.img}" alt="${c.name}" loading="lazy"/>
+      <div class="cat-content">
+        <h3>${c.name}</h3>
+        <p>${c.count} Styles</p>
+        <div class="cat-link">Explore <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+      </div>
+    </div>
+  `).join('');
+}
+
+// ─── TESTIMONIALS ───
+let testiIdx = 0;
+function renderTestimonials() {
+  const track = document.getElementById('testiTrack');
+  const nav = document.getElementById('testiNav');
+  track.innerHTML = testimonials.map(t=>`
+    <div class="testi-card">
+      <div class="testi-stars">${'★'.repeat(t.stars)}</div>
+      <blockquote>${t.text}</blockquote>
+      <div class="testi-author">
+        <div class="testi-avatar"><img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=80&q=60" alt="${t.author}"/></div>
+        <div class="testi-info"><h5>${t.author}</h5><span>${t.role}</span></div>
+      </div>
+    </div>
+  `).join('');
+
+  // Dots — calculate how many pages
+  const perPage = window.innerWidth > 1024 ? 3 : window.innerWidth > 768 ? 2 : 1;
+  const pages = Math.ceil(testimonials.length / perPage);
+  nav.innerHTML = Array.from({length:pages},(_,i)=>`<button class="testi-dot${i===0?' active':''}" onclick="goTesti(${i})"></button>`).join('');
+}
+
+function goTesti(i) {
+  testiIdx = i;
+  const perPage = window.innerWidth > 1024 ? 3 : window.innerWidth > 768 ? 2 : 1;
+  const card = document.querySelector('.testi-card');
+  const gap = 16;
+  const w = card ? card.offsetWidth + gap : 0;
+  document.getElementById('testiTrack').style.transform = `translateX(-${i * perPage * w}px)`;
+  document.querySelectorAll('.testi-dot').forEach((d,idx)=>d.classList.toggle('active',idx===i));
+}
+
+// ─── INSTAGRAM GRID ───
+function renderInsta() {
+  document.getElementById('instaGrid').innerHTML = instaImgs.map(src=>`
+    <div class="insta-item">
+      <img src="${src}" alt="Instagram" loading="lazy"/>
+      <div class="insta-overlay"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/></svg></div>
+    </div>
+  `).join('');
+}
+
+// ─── MARQUEE ───
+function initMarquee() {
+  const words = ['Handcrafted','Premium Leather','Italian Sole','Timeless Design','Limited Edition','Blake Welt','Florence Atelier','Luxury Comfort'];
+  let html = '';
+  // Double for seamless loop
+  words.forEach(w=>{ html += `<span>${w}</span><span class="sep">✦</span>`; });
+  words.forEach(w=>{ html += `<span>${w}</span><span class="sep">✦</span>`; });
+  document.getElementById('marquee').innerHTML = html;
+}
+
+// ─── SPOTLIGHT SIZES ───
+document.querySelectorAll('.sz').forEach(btn=>{
+  btn.addEventListener('click',function(){
+    document.querySelectorAll('.sz').forEach(s=>s.classList.remove('active'));
+    this.classList.add('active');
+  });
+});
+
+// ─── PARALLAX ───
+function parallax() {
+  const el = document.getElementById('parallaxQuote');
+  if(!el) return;
+  const rect = el.getBoundingClientRect();
+  const speed = 0.15;
+  const offset = (rect.top - window.innerHeight/2) * speed;
+  el.querySelector('.bg-img').style.transform = `translateY(${offset}px) scale(1.15)`;
+}
+
+// ─── NAV SCROLL ───
+window.addEventListener('scroll',()=>{
+  document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 60);
+  parallax();
+});
+
+// ─── SCROLL REVEAL ───
+const observer = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('vis');observer.unobserve(e.target)}});
+},{threshold:0.12});
+document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+// Re-observe after dynamic renders
+function reObserve() {
+  document.querySelectorAll('.reveal:not(.vis)').forEach(el=>observer.observe(el));
+}
+
+// ─── MOBILE NAV ───
+document.getElementById('hamburger').addEventListener('click',()=>document.getElementById('mobileMenu').classList.add('open'));
+document.getElementById('mobClose').addEventListener('click',closeMob);
+function closeMob(){document.getElementById('mobileMenu').classList.remove('open')}
+
+// ─── TOAST ───
+let toastTimer;
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  document.getElementById('toastMsg').textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(()=>t.classList.remove('show'),2400);
+}
+
+// ─── NEWSLETTER ───
+function nlSubmit() {
+  const inp = document.getElementById('nlInput');
+  if(inp.value.trim() && inp.value.includes('@')) {
+    showToast('Welcome to the Inner Circle ✓');
+    inp.value='';
+  } else {
+    inp.style.borderColor='#e04848';
+    setTimeout(()=>inp.style.borderColor='',1200);
+  }
+}
+
+// ─── INIT ───
+initMarquee();
+initFilters();
+renderProducts();
+renderCategories();
+renderTestimonials();
+renderInsta();
+setTimeout(reObserve, 200);
+window.addEventListener('resize',()=>{ renderTestimonials(); goTesti(0); });
+</script>
+</body>
+</html>
